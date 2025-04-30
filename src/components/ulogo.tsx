@@ -1,7 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-export default function Ulogo() {
+interface props {
+  color?: string;
+}
+
+export default function Ulogo({color}: props) {
     return (
         <motion.svg
           width="34"
@@ -19,7 +23,7 @@ export default function Ulogo() {
           <g clipPath="url(#clip0_9_42)">
             <motion.path
               d="M8.145 30.1431C22.3217 32.94 28.8894 21.031 30.4012 14.7268L25.6609 17.516L10.9553 2.38344L15.978 26.6944C7.46006 26.6786 -6.03166 27.3462 8.145 30.1431Z"
-              stroke="#737373"
+              stroke={color ? color : '#737373'}
               strokeWidth="1"
               strokeDasharray="1000"
             />

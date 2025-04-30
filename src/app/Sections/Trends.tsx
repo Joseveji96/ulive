@@ -7,7 +7,7 @@ export default function Trends() {
   return (
     <section className='bg-blanco-50 w-full min-h-screen m-0 p-16'>
       <div className='flex flex-row justify-between items-center'>
-        <div className='flex flex-col gap-8 h-full'>
+        <div className='flex flex-col h-full'>
           <h2 className='text-6xl font-bold text-black uppercase'> Month&apos;s Trends</h2>
           <p className='text-lg font-medium uppercase text-black'>Fashion curated by the community —</p>
         </div>
