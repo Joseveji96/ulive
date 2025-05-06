@@ -21,12 +21,12 @@ function LargeCards({ image, text, colorText, height = 550, progress = 0, index 
     
     return (
         <motion.div
-            animate={{ height }}
+            animate={{ height  }}
             transition={{ 
-                duration: 0.2, 
-                ease: [0.25, 0.1, 0.25, 1]
+                duration: 0.5, 
+                ease: [0, 0.1, 0.2, 1]
             }}
-            className='bg-blanco-50 w-full overflow-hidden rounded-lg shadow-card hover:shadow-card-hover'
+            className={`bg-blanco-50 w-full overflow-hidden shadow-card hover:shadow-card-hover ${index == 0 ? "rounded-t-lg" : ""}`}
         >
             <div className="relative w-full h-full overflow-hidden p-4">
                 <div className="absolute inset-0 p-8 flex items-end">
