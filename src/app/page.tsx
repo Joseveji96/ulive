@@ -3,7 +3,6 @@ import Hero from './Sections/Hero';
 import About from './Sections/About';
 import Trends from './Sections/Trends';
 import Express from './Sections/Express';
-import Application from './Sections/Application';
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
       <About/>
       <Trends/>
       <Express/>
-      <Application/>
     </>
   );
 }
