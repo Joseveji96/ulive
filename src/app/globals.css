@@ -85,4 +85,39 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Estilos para scroll snap */
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+[data-is-sticky="true"] {
+  transition: transform 0.3s ease-out;
+}
+
+/* Estilos para el componente Application */
+#application-section {
+  will-change: transform, opacity;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

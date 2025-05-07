@@ -3,37 +3,54 @@ import React, { useEffect, useRef, useState } from 'react';
 import LargeCards from '@/components/LargeCards';
 import Button from '@/components/Button';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Application from './Application'; // Importamos el componente Application
 
 const CARD_FULL = 550;
 const CARD_MIN = 120;
-const SCROLL_OFFSET = 600;
-// Espacio adicional de scroll después de la última tarjeta (en píxeles)
-const EXTRA_SCROLL_SPACE = 300; 
+const SCROLL_OFFSET = 550;
 
-function Express() {
+function Express({ onShowApplication }: { onShowApplication: (show: boolean) => void }) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const cardsContainerRef = useRef<HTMLDivElement>(null);
 	const extraSpaceRef = useRef<HTMLDivElement>(null);
 	const [cardHeights, setCardHeights] = useState<number[]>([]);
 	const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-	const [showApplication, setShowApplication] = useState(false);
+
 	const [lastScrollY, setLastScrollY] = useState(0);
+	const [isSticky, setIsSticky] = useState(false);
 
 	// Scroll progress de la sección de cards
 	const { scrollYProgress } = useScroll({
 		target: cardsContainerRef,
 		offset: ["start start", "end start"]
 	});
-
-	// Transformar el valor de scroll para la animación de transición
-	const expressY = useTransform(scrollYProgress, [0.9, 1], [0, -100]);
-	
+	// Transformar el valor de scroll para las animaciones de transición
+	const expressExitY = useTransform(scrollYProgress, [0.8, 1], [0, -200], { clamp: false });
+	const [hasEnteredView, setHasEnteredView] = useState(false);
 	// Calcular las alturas de las tarjetas basadas en scroll
+	useEffect(() => {
+		if (!containerRef.current) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && !hasEnteredView) {
+					setHasEnteredView(true);
+				}
+			},
+			{ threshold: 0.1 } // Activar cuando el 10% de Express sea visible
+		);
+
+		observer.observe(containerRef.current);
+
+		return () => {
+			if (containerRef.current) {
+				observer.unobserve(containerRef.current);
+			}
+		};
+	}, [hasEnteredView]);
 	useEffect(() => {
 		const updateCardHeights = () => {
 			if (!cardRefs.current.length) return;
-			
+
 			// Guardar la posición actual del scroll para detectar dirección
 			const currentScrollY = window.scrollY;
 			const scrollingDown = currentScrollY > lastScrollY;
@@ -68,15 +85,26 @@ function Express() {
 			if (extraSpaceRef.current) {
 				const extraSpaceRect = extraSpaceRef.current.getBoundingClientRect();
 				
-				// Si estamos bajando y llegamos al final del espacio extra
-				if (scrollingDown && extraSpaceRect.bottom < window.innerHeight && !showApplication) {
-					// Activar la animación para mostrar Application
-					setShowApplication(true);
+				if (scrollingDown && extraSpaceRect.bottom < window.innerHeight) {
+				  onShowApplication(true); // <-- Notificamos al padre
 				} 
-				// Si estamos subiendo y el espacio extra está por debajo de la parte superior de la pantalla
-				else if (!scrollingDown && extraSpaceRect.top > window.innerHeight * 0.7 && showApplication) {
-					// Ocultar Application al hacer scroll hacia arriba
-					setShowApplication(false);
+				else if (!scrollingDown && extraSpaceRect.top > window.innerHeight * 0.7) {
+				  onShowApplication(false); // <-- Notificamos al padre
+				}
+			  }
+
+			// Verificar si Express está en modo sticky para la transición
+			if (containerRef.current) {
+				const rect = containerRef.current.getBoundingClientRect();
+				const wasSticky = isSticky;
+				const nowSticky = rect.top <= 0;
+
+				if (nowSticky !== wasSticky) {
+					setIsSticky(nowSticky);
+					// Actualizar el atributo data para que page.tsx pueda detectarlo
+					if (containerRef.current) {
+						containerRef.current.setAttribute('data-is-sticky', String(nowSticky));
+					}
 				}
 			}
 		};
@@ -88,7 +116,8 @@ function Express() {
 		return () => {
 			window.removeEventListener('scroll', updateCardHeights);
 		};
-	}, [showApplication, lastScrollY]);
+	}, [onShowApplication, lastScrollY, isSticky]);
+
 
 	const cards = [
 		{ text: 'Create Collections', image: '/collection2.jpg' },
@@ -103,10 +132,21 @@ function Express() {
 			<motion.section
 				className='bg-blanco-50 w-full p-16 relative'
 				ref={containerRef}
-				style={{ 
-					y: expressY,
-					zIndex: 10,
+				initial={{ y: 100, opacity: 0 }}
+				animate={{
+					y: isSticky ? expressExitY : (hasEnteredView ? 0 : 100),
+					opacity: hasEnteredView ? 1 : 0
 				}}
+				transition={{
+					type: "spring",
+					stiffness: 50,
+					damping: 20,
+					opacity: { duration: 0.5 }
+				}}
+				style={{
+					zIndex: 5, // Ajustamos el z-index para que sea menor que Application
+				}}
+				data-is-sticky={isSticky}
 			>
 				<div className='flex justify-between items-end mb-6'>
 					<div>
@@ -130,7 +170,8 @@ function Express() {
 								key={i}
 								ref={(el) => { cardRefs.current[i] = el }}
 								className="mb-0"
-								style={{willChange: 'height'}}	
+								style={{ willChange: 'height' }}
+								data-last-card={i === cards.length - 1 ? "true" : "false"}
 							>
 								<LargeCards
 									{...card}
@@ -142,26 +183,14 @@ function Express() {
 						);
 					})}
 				</div>
-				
-				{/* Espacio adicional después de las cards para activar la transición */}
-				<div 
-					ref={extraSpaceRef} 
-					className="w-full" 
-					style={{ height: `${EXTRA_SCROLL_SPACE}px` }}
-				></div>
-			</motion.section>
 
-			{/* Sección Application con animación */}
-			<motion.div
-				className="fixed top-0 left-0 w-full h-screen"
-				initial={{ y: "100vh" }}
-				animate={showApplication ? { y: 0} : { y: "100vh"}}
-				transition={{ type: "spring", stiffness: 120, damping: 20 }}
-				style={{ zIndex: 20 }}
-			>
-				{/* Pasamos el estado a Application para que sepa cuándo activar sus animaciones internas */}
-				<Application isActive={showApplication} />
-			</motion.div>
+				{/* Espacio extra para detectar cuándo activar la transición */}
+				<div
+					ref={extraSpaceRef}
+					className="h-0 opacity-0"
+					style={{ pointerEvents: 'none' }}
+				/>
+			</motion.section>
 		</div>
 	);
 }
