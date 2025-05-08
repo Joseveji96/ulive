@@ -139,12 +139,13 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 				}}
 				transition={{
 					type: "spring",
-					stiffness: 50,
-					damping: 20,
-					opacity: { duration: 0.5 }
+					stiffness: 45,
+					damping: 30,
+					mass: 1.2,
+					opacity: { duration: 0.8, ease: "easeInOut" }
 				}}
 				style={{
-					zIndex: 5, // Ajustamos el z-index para que sea menor que Application
+					zIndex: 10, // Ajustamos el z-index para que sea menor que Application
 				}}
 				data-is-sticky={isSticky}
 			>

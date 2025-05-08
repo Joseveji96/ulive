@@ -9,7 +9,7 @@ import Application from "./Sections/Application"
 import C from "./Sections/C"
 import { AnimatePresence } from "framer-motion"
 export default function Home() {
-  const [showApplication, setShowApplication] = useState(false);
+  const [showApplication, setShowApplication] = useState(false)
 
   return (
     <div className="scroll-smooth">
@@ -17,16 +17,9 @@ export default function Home() {
       <Hero />
       <About />
       <Trends />
-      <Express
-        onShowApplication={(show) => setShowApplication(show)}
-      />
-      <AnimatePresence>
-        {showApplication && (
-          <Application
-            key="application-section"
-            onHide={() => setShowApplication(false)}
-          />
-        )}
+      <Express onShowApplication={(show) => setShowApplication(show)} />
+      <AnimatePresence mode="wait">
+        {showApplication && <Application key="application-section" onHide={() => setShowApplication(false)} />}
       </AnimatePresence>
       <C />
     </div>

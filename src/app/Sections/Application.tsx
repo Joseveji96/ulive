@@ -103,17 +103,19 @@ const slideVariants = {
     opacity: 1,
     transition: {
       type: "spring",
-      stiffness: 50,
-      damping: 20,
-      mass: 0.8
+      stiffness: 45,
+      damping: 30,
+      mass: 1.2,
+      opacity: { duration: 0.8, ease: "easeInOut" }
     }
   },
   exit: { 
     y: "100%", 
     opacity: 0,
     transition: {
-      duration: 0.6,
-      ease: [0.4, 0, 0.2, 1]
+      duration: 0.8,
+      ease: [0.4, 0, 0.2, 1],
+      opacity: { duration: 0.6, ease: "easeInOut" }
     }
   }
 };
@@ -121,7 +123,23 @@ const slideVariants = {
   // Determinar si Application debería estar en posición fixed o en el flujo normal
   const isInTransition = shouldAnimate && expressIsSticky && !transitionComplete;
 
+  // Calcular la altura del espacio reservado para mantener el scroll suave
+  const [placeholderHeight, setPlaceholderHeight] = useState(0);
+  
+  useEffect(() => {
+    if (appRef.current && isInTransition) {
+      const height = appRef.current.offsetHeight;
+      setPlaceholderHeight(height);
+    } else {
+      setPlaceholderHeight(0);
+    }
+  }, [isInTransition]);
+
   return (
+    <>
+      {/* Espacio reservado para mantener el scroll suave */}
+      {isInTransition && <div style={{ height: `${placeholderHeight}px` }} />}
+      
       <motion.div
         ref={appRef}
         id="application-section"
@@ -177,6 +195,7 @@ const slideVariants = {
                 Download for Android ⬇
               </button>
             </motion.div>
+
           </div>
 
           {/* Contenedor para el SVG redimensionable con animación */}
@@ -200,6 +219,7 @@ const slideVariants = {
           </motion.div>
         </div>
       </motion.div>
+    </>
   )
 }
 
