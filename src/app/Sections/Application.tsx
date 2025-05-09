@@ -49,7 +49,7 @@ function Application({ onHide }: { onHide: () => void }) {
       if (isSticky && lastCard) {
         const lastCardRect = lastCard.getBoundingClientRect()
         // Activar la animación cuando la última tarjeta esté casi fuera de la vista
-        const triggerPoint = window.innerHeight - 100 // Un poco antes del borde inferior
+        const triggerPoint = window.innerHeight + 300 // Un poco antes del borde inferior
         
         if (lastCardRect.bottom < triggerPoint && newDirection === "down") {
           if (!shouldAnimate) {
@@ -103,10 +103,9 @@ const slideVariants = {
     opacity: 1,
     transition: {
       type: "spring",
-      stiffness: 45,
+      stiffness: 150, 
       damping: 30,
-      mass: 1.2,
-      opacity: { duration: 0.8, ease: "easeInOut" }
+      opacity: { duration: 0.3, ease: "easeInOut" }
     }
   },
   exit: { 
@@ -138,12 +137,12 @@ const slideVariants = {
   return (
     <>
       {/* Espacio reservado para mantener el scroll suave */}
-      {isInTransition && <div style={{ height: `${placeholderHeight}px` }} />}
+      {isInTransition && <div style={{ height: `${placeholderHeight + 900}px` }} />}
       
       <motion.div
         ref={appRef}
         id="application-section"
-        className="relative min-h-screen w-full"
+        className="relative h-screen w-full"
         initial="hidden"
         animate={shouldAnimate ? "visible" : "hidden"}
         variants={slideVariants}

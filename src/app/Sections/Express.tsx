@@ -2,13 +2,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LargeCards from '@/components/LargeCards';
 import Button from '@/components/Button';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const CARD_FULL = 550;
 const CARD_MIN = 120;
 const SCROLL_OFFSET = 550;
 
-function Express({ onShowApplication }: { onShowApplication: (show: boolean) => void }) {
+function Express({ onShowApplication }: { onShowApplication: (show: boolean) => void; }) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const cardsContainerRef = useRef<HTMLDivElement>(null);
 	const extraSpaceRef = useRef<HTMLDivElement>(null);
@@ -18,13 +18,12 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 	const [lastScrollY, setLastScrollY] = useState(0);
 	const [isSticky, setIsSticky] = useState(false);
 
-	// Scroll progress de la sección de cards
-	const { scrollYProgress } = useScroll({
-		target: cardsContainerRef,
-		offset: ["start start", "end start"]
-	});
+
+	// Agrega este useEffect al componente Express
+useEffect(() => {
+	onShowApplication(false); // Estado inicial al montar
+  }, []); // <-- Dependencia vacía = se ejecuta solo al montar
 	// Transformar el valor de scroll para las animaciones de transición
-	const expressExitY = useTransform(scrollYProgress, [0.8, 1], [0, -200], { clamp: false });
 	const [hasEnteredView, setHasEnteredView] = useState(false);
 	// Calcular las alturas de las tarjetas basadas en scroll
 	useEffect(() => {
@@ -36,7 +35,7 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 					setHasEnteredView(true);
 				}
 			},
-			{ threshold: 0.1 } // Activar cuando el 10% de Express sea visible
+			{ threshold: 0.9 } // Activar cuando el 10% de Express sea visible
 		);
 
 		observer.observe(containerRef.current);
@@ -84,11 +83,10 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 			// Verificar si estamos en el espacio extra después de las tarjetas
 			if (extraSpaceRef.current) {
 				const extraSpaceRect = extraSpaceRef.current.getBoundingClientRect();
-				
-				if (scrollingDown && extraSpaceRect.bottom < window.innerHeight) {
+				if (scrollingDown && (extraSpaceRect.bottom - 900) < window.innerHeight) {
 				  onShowApplication(true); // <-- Notificamos al padre
 				} 
-				else if (!scrollingDown && extraSpaceRect.top > window.innerHeight * 0.7) {
+				else if (!scrollingDown && extraSpaceRect.top > window.innerHeight * 2) {
 				  onShowApplication(false); // <-- Notificamos al padre
 				}
 			  }
@@ -130,13 +128,8 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 		<div className="relative">
 			{/* Sección Express con animación */}
 			<motion.section
-				className='bg-blanco-50 w-full p-16 relative'
+				className='bg-blue-500 w-full p-16 relative'
 				ref={containerRef}
-				initial={{ y: 100, opacity: 0 }}
-				animate={{
-					y: isSticky ? expressExitY : (hasEnteredView ? 0 : 100),
-					opacity: hasEnteredView ? 1 : 0
-				}}
 				transition={{
 					type: "spring",
 					stiffness: 45,
@@ -147,7 +140,6 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 				style={{
 					zIndex: 10, // Ajustamos el z-index para que sea menor que Application
 				}}
-				data-is-sticky={isSticky}
 			>
 				<div className='flex justify-between items-end mb-6'>
 					<div>
@@ -188,7 +180,7 @@ function Express({ onShowApplication }: { onShowApplication: (show: boolean) => 
 				{/* Espacio extra para detectar cuándo activar la transición */}
 				<div
 					ref={extraSpaceRef}
-					className="h-0 opacity-0"
+					className="h-0"
 					style={{ pointerEvents: 'none' }}
 				/>
 			</motion.section>
