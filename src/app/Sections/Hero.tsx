@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="sticky top-0 z-10 w-full h-screen overflow-hidden" id="section1">
       <Image
         src="/back.jpg"
         alt="Background"

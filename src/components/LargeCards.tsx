@@ -12,7 +12,7 @@ interface props {
     index?: number;
 }
 
-function LargeCards({ image, text, colorText, height = 550, progress = 0, index = 0 }: props) {
+function LargeCards({ image, text, colorText, height = 0, progress = 0, index = 0 }: props) {
     // Valores de animación basados en el progreso (0 = altura completa, 1 = altura mínima)
     const imageScale = 1 + (progress * 0.15); // La imagen se agranda ligeramente
     const imageOpacity = 1 - (progress * 0.2); // La imagen se oscurece ligeramente
@@ -29,7 +29,7 @@ function LargeCards({ image, text, colorText, height = 550, progress = 0, index 
             className={`bg-blanco-50 w-full overflow-hidden shadow-card hover:shadow-card-hover ${index == 0 ? "rounded-t-lg" : ""}`}
         >
             <div className="relative w-full h-full overflow-hidden p-4">
-                <div className="absolute inset-0 p-8 flex items-end">
+                <div className="absolute inset-0 p-8 flex">
                     <motion.div 
                         className="absolute inset-0"
                         animate={{ 

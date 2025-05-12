@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div className='bg-blanco-50 w-full h-screen m-0 p-16'>
+    <div className='relative z-20 bg-blanco-50 w-full h-screen m-0 p-16 'id="section2">
       <div className='flex flex-row h-full'>
         <div className='relative inline-block'>
           <AnimatiedShape w={700} h={600} />
