@@ -12,11 +12,11 @@ export default function Hero() {
         className="object-cover object-[center_35%]"
       />
 
-      <div className="absolute inset-0 z-10 flex items-end px-16 py-24">
+      <div className="absolute inset-0 z-10 flex items-end px-16 py-24 text-blanco-50">
         {/* Bloque de Títulos */}
         <div className="flex flex-col space-y-4">
           <div className='flex mb-0 items-center justify-between '>
-            <h2 className="uppercase leading-16 text-9xl text-primary-100">
+            <h2 className="uppercase leading-16 text-9xl text-blanco-50">
               Dripped
             </h2>
             <p className="uppercase text-[16px] font-light translate-x-34">
