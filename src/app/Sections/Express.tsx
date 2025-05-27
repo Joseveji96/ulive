@@ -151,7 +151,7 @@ function Express() {
 
 
 	return (
-		<div ref={sectionRef} className="relative">
+		<div ref={sectionRef} className="absolute">
 			{/* Sección Express con animación */}
 			<motion.section
 				className='bg-blue-500 w-full p-16 block start-0 space-y-20'

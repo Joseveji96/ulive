@@ -6,15 +6,15 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-regular text-primary-50">
+            <Link href="/" className="text-2xl font-regular text-blanco-50">
               ULIVE
             </Link>
           </div>
-          <div className="hidden text-lg text-primary-50 font-regular sm:flex items-center space-x-8">
-            <a href="#" className="text-primary-50 hover:text-gray-900">Home</a>
-            <a href="#" className="text-primary-50 hover:text-gray-900">About</a>
-            <a href="#" className="text-primary-50 hover:text-gray-900">Services</a>
-            <a href="#" className="text-primary-50 hover:text-gray-900">Contact</a>
+          <div className="hidden text-lg text-blanco-50 font-regular sm:flex items-center space-x-8">
+            <a href="#" className="text-blanco-50 hover:text-gray-900">Home</a>
+            <a href="#" className="text-blanco-50 hover:text-gray-900">About</a>
+            <a href="#" className="text-blanco-50 hover:text-gray-900">Services</a>
+            <a href="#" className="text-blanco-50 hover:text-gray-900">Contact</a>
             <div className='flex items-center justify-center rounded-full border-1'>
               <Link href="/login" className="bg-secondary-500 text-white px-2 py-2 rounded-md hover:bg-secondary-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">

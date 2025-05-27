@@ -2,7 +2,10 @@ import React from 'react'
 
 function C() {
   return (
-    <div className='w-full h-[100vh] bg-red-700 '> <h1> hola</h1></div>
+
+    <section className="relative w-full min-h-screen bg-red-700">
+      <p className="text-center py-20 text-2xl">Siguiente sección</p>
+    </section>
   )
 }
 
