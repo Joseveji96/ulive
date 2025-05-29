@@ -1,29 +1,53 @@
-import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import Hero from './Hero';
+import { useRef, useEffect, useState, useCallback } from 'react';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+} from 'framer-motion';
 import About from './About';
+import Hero2 from './Hero2';
 
 export default function Eje() {
   const containerRef = useRef(null);
-  const heroRef = useRef(null);
-  const section2Ref = useRef(null);
   const isSnapping = useRef(false);
   const { scrollY } = useScroll();
+  const [vh, setVh] = useState(0);
+  const lastScrollY = useRef(0);
+  const [mounted, setMounted] = useState(false);
 
-  const section2Y = useTransform(
-    scrollY,
-    [0, 450, 600],
-    ['100vh', '30vh', '0vh']
-  );
-  const smoothSection2Y = useSpring(section2Y, { stiffness: 80, damping: 20 });
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.7]);
-  const heroScale = useTransform(scrollY, [0, 400], [0, 1.1]);
+  useEffect(() => {
+    setMounted(true);
+    lastScrollY.current = window.scrollY;
+  }, []);
 
-  const snapTo = (target: number) => {
+  useEffect(() => {
+    const updateVh = () => setVh(window.innerHeight);
+    updateVh();
+    window.addEventListener('resize', updateVh);
+    return () => window.removeEventListener('resize', updateVh);
+  }, []);
+
+  // Sección About con posición inicial correcta
+  const rawSection2Y = useTransform(scrollY, [0, 100], [vh, vh * 0.48]);
+  const section2Y = useSpring(rawSection2Y, {
+    stiffness: 40,
+    damping: 18,
+    mass: 1.2,
+  });
+
+  // Hero: escala más leve
+  const rawHeroScale = useTransform(scrollY, [0, 220], [1, 1.06]);
+  const heroScale = useSpring(rawHeroScale, {
+    stiffness: 30,
+    damping: 15,
+    mass: 1,
+  });
+
+  const snapTo = useCallback((target: number) => {
     isSnapping.current = true;
     window.scrollTo({ top: target, behavior: 'smooth' });
 
-    // Esperar hasta que el scroll termine realmente
     const waitForScrollEnd = () => {
       const currentY = window.scrollY;
       if (Math.abs(currentY - target) < 2) {
@@ -33,58 +57,55 @@ export default function Eje() {
       }
     };
     requestAnimationFrame(waitForScrollEnd);
-  };
+  }, []);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (isSnapping.current) return;
-
     const y = window.scrollY;
-
-    if (y > 0 && y < 100) {
-      snapTo(0);
-    } else if (y >= 100 && y < 400) {
-      snapTo(350);
+    const diirection = y > lastScrollY.current ? 'down' : 'up';
+    lastScrollY.current = y;
+    console.log('Scroll Y:', y, diirection, 'Last Scroll Y:', lastScrollY.current);
+    if (y > 0 && y < 350) {
+      if (diirection === 'up') {
+        snapTo(0);
+      } else {
+        snapTo(350);
+      }
     }
-  };
+  }, [snapTo, lastScrollY]);
 
   useEffect(() => {
     let scrollTimeout: ReturnType<typeof setTimeout>;
 
     const onScrollEnd = () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(handleScroll, 120);
+      scrollTimeout = setTimeout(handleScroll, 150);
     };
 
     window.addEventListener('scroll', onScrollEnd);
-
     return () => {
       window.removeEventListener('scroll', onScrollEnd);
       clearTimeout(scrollTimeout);
     };
-  }, []);
+  }, [handleScroll]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[150vh] overflow-y-hidden">
-      <div className="h-[150vh] relative">
+    <div ref={containerRef} className="relative w-full h-[148vh] overflow-hidden">
+      <div className="relative">
         {/* Hero */}
         <motion.section
-          ref={heroRef}
           className="absolute top-0 left-0 h-screen w-full flex items-center justify-center overflow-hidden"
           style={{
-            opacity: heroOpacity,
-            y: heroScale
+            scale: heroScale,
           }}
         >
-          <Hero />
+          <Hero2 />
         </motion.section>
-
         {/* About */}
         <motion.section
-          ref={section2Ref}
           className="absolute top-0 left-0 w-full min-h-screen bg-white z-20"
-          style={{
-            y: smoothSection2Y
-          }}
+          initial={{ y: mounted ? vh : 750 }}
+          style={{ y: section2Y }}
         >
           <About />
         </motion.section>

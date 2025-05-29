@@ -70,10 +70,14 @@
   --color-cafe: #E0E2D0;
   --color-verde: #3D7850;
   --font-satoshi: 'satoshi', sans-serif;
+
+
+  --breakpoint-3xl: 120rem;
 }
 
 body {
   overflow-x: hidden;
+  background-color: #FBFBFB
 }
 
 /* Estilos para scroll snap */
@@ -224,4 +228,14 @@ html {
   body {
     @apply bg-background;
   }
+}
+
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  
 }

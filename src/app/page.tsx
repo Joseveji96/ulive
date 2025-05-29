@@ -3,16 +3,20 @@
 import Navbar from "@/components/Navbar"
 import Eje from "./Sections/Eje"
 import Trends from "./Sections/Trends"
+import Express from "./Sections/Express"
+import Application from "./Sections/Application"
 
 
 export default function Home() {
 
 
   return (
-    <div className="scroll-smooth">
+    <div className="scroll-smooth hide-scrollbar">
       <Navbar />
       <Eje/>
-    <Trends/> 
+      <Express/> 
+      <Trends/>
+      <Application/> 
     </div>
   )
 }

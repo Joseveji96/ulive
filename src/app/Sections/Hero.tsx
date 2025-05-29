@@ -3,13 +3,13 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <div className="sticky top-0 z-10 w-full h-screen overflow-hidden" id="section1">
+    <div className=" z-10 w-full h-screen overflow-hidden">
       <Image
-        src="/back.jpg"
+        src="/HeroImg.png"
         alt="Background"
         fill
         priority
-        className="object-cover object-[center_35%]"
+        className="object-cover object-[center_25%]"
       />
 
       <div className="absolute inset-0 z-10 flex items-end px-16 py-24 text-blanco-50">
@@ -34,7 +34,7 @@ export default function Hero() {
               all <span className="text-naranja">style</span>
             </h2>
             <div className="w-32 h-3 rounded-2xl bg-white" />
-            <Button title="Shop now" />
+            <Button title="Shop now"  />
           </div>
         </div>
       </div>
