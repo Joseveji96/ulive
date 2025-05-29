@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-satoshi hide-scrollbar">
+    <html lang="en" className="!scroll-smooth md:scroll-auto">
+      <body className="font-satoshi hide-scrollbar scroll-smooth md:scroll-auto">
         {children}
       </body>
     </html>

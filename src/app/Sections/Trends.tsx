@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function Trends() {
   return (
-    <section className='relative top-0 bg-blanco-50 w-full min-h-screen m-0 p-16'>
+    <section className='relative top-0 bg-blanco-50 w-full min-h-screen m-0 p-16' id='trends'>
       <div className='flex flex-row justify-between items-center'>
         <div className='flex flex-col h-full'>
           <h2 className='text-6xl font-bold text-black uppercase'> Month&apos;s Trends</h2>

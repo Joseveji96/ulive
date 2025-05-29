@@ -63,7 +63,7 @@ export default function Hero2() {
   };
 
   return (
-    <div className="z-10 w-full h-screen overflow-hidden relative">
+    <div className="z-10 w-full h-screen overflow-hidden relative" id='home'>
       <Image
         src="/Heroo.jpg"
         alt="Background"
