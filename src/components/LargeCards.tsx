@@ -16,8 +16,6 @@ function LargeCards({ image, text, colorText, height = 0, progress = 0, index = 
     // Valores de animación basados en el progreso (0 = altura completa, 1 = altura mínima)
     const imageScale = 1 + (progress * 0.15); // La imagen se agranda ligeramente
     const imageOpacity = 1 - (progress * 0.2); // La imagen se oscurece ligeramente
-    const textScale = 1 - (progress * 0.3); // El texto se reduce
-    const textY = progress * 25; // El texto se mueve hacia abajo
     
     return (
         <motion.div
@@ -52,16 +50,11 @@ function LargeCards({ image, text, colorText, height = 0, progress = 0, index = 
                         <Ulogo color='#E0E2D0' />
                     </div>
                     
-                    <motion.h2 
-                        className={`absolute text-9xl flex ${colorText ?? "text-cafe"}`}
-                        animate={{ 
-                            scale: textScale,
-                            y: textY
-                        }}
-                        transition={{ duration: 0.2 }}
+                    <h2 
+                        className={`absolute flex justify-start w-full text-9xl ${colorText ?? "text-cafe"}`}
                     >
                         {text}
-                    </motion.h2>
+                    </h2>
                 </div>
             </div>
         </motion.div>

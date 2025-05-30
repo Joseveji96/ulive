@@ -5,6 +5,8 @@ import Eje from "./Sections/Eje"
 import Trends from "./Sections/Trends"
 import Express from "./Sections/Express"
 import Application from "./Sections/Application"
+import Footer from "./Sections/Footer"
+import Social from "./Sections/Social"
 
 
 export default function Home() {
@@ -16,7 +18,9 @@ export default function Home() {
       <Eje/>
       <Express/> 
       <Trends/>
-      <Application/> 
+      <Application/>
+      <Social/>
+      <Footer/>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import LargeCards from '@/components/LargeCards';
 import Button from '@/components/Button';
 import { motion } from 'framer-motion';
+import { AnimatedText } from '@/components/AnimatedTextDemo';
 
 function Express() {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -21,9 +22,9 @@ function Express() {
 			const vh = window.innerHeight;
 
 			setSizes({
-				cardFull: vh * 0.8,       // 70% de la pantalla
-				cardMin: vh * 0.2,        // 20% de la pantalla
-				scrollOffset: vh * 0.8,  // 75% del alto para el offset
+				cardFull: vh * 0.75,       // 70% de la pantalla
+				cardMin: vh * 0.25,        // 20% de la pantalla
+				scrollOffset: vh * 0.75,  // 75% del alto para el offset
 			});
 		};
 
@@ -45,7 +46,8 @@ function Express() {
 	const [hasEnteredView, setHasEnteredView] = useState(false);
 	// Calcular las alturas de las tarjetas basadas en scroll
 	useEffect(() => {
-		if (!containerRef.current) return;
+		const currentContainer = containerRef.current;
+		if (!currentContainer) return;
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -56,11 +58,11 @@ function Express() {
 			{ threshold: 0.9 } // Activar cuando el 10% de Express sea visible
 		);
 
-		observer.observe(containerRef.current);
+		observer.observe(currentContainer);
 
 		return () => {
-			if (containerRef.current) {
-				observer.unobserve(containerRef.current);
+			if (currentContainer) {
+				observer.unobserve(currentContainer);
 			}
 		};
 	}, [hasEnteredView]);
@@ -108,46 +110,46 @@ function Express() {
 		return () => {
 			window.removeEventListener('scroll', updateCardHeights);
 		};
-	}, [lastScrollY]);
+	}, [CARD_FULL, CARD_MIN, SCROLL_OFFSET, lastScrollY]);
 
 
 	const cards = [
 		{ text: 'Create Collections', image: '/collection2.jpg' },
 		{ text: 'Share your outfit', image: '/levis.jpg' },
 		{ text: 'Inspire Community', image: '/3.jpg' },
-		{ text: 'Find Your Style', image: '/4.jpg' },
+		{ text: 'Find Your Style', image: '/find.jpg' },
 	];
 
 
 	const sectionRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (
-          entry.isIntersecting &&
-          entry.boundingClientRect.top > 0 &&
-          entry.boundingClientRect.top < 150
-        ) {
-          const el = sectionRef.current
-          if (el) {
-            el.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            })
-          }
-        }
-      },
-      { threshold: 0.2 }
-    )
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (
+					entry.isIntersecting &&
+					entry.boundingClientRect.top > 0 &&
+					entry.boundingClientRect.top < 150
+				) {
+					const el = sectionRef.current
+					if (el) {
+						el.scrollIntoView({
+							behavior: "smooth",
+							block: "start",
+						})
+					}
+				}
+			},
+			{ threshold: 0.2 }
+		)
 
-    const el = sectionRef.current
-    if (el) observer.observe(el)
+		const el = sectionRef.current
+		if (el) observer.observe(el)
 
-    return () => {
-      if (el) observer.unobserve(el)
-    }
-  }, [])
+		return () => {
+			if (el) observer.unobserve(el)
+		}
+	}, [])
 
 
 	return (
@@ -165,14 +167,28 @@ function Express() {
 				}}
 			>
 				<div className='flex justify-between items-end mb-6'>
-					<div>
-						<h2 className='uppercase text-black font-bold text-6xl'>
+					<div className='flex flex-col'>
+						<AnimatedText
+							text="express yourself."
+							className="uppercase text-black font-bold text-6xl"
+							delay={0.2}
+							duration={0.2}
+							staggerDelay={0.08}
+						/>
+						{/* <h2 className='uppercase text-black font-bold text-6xl'>
 							express yourself.<br />
-							<p className='text-lg font-medium uppercase text-black'>( From current trends to alternative styles )</p>
-						</h2>
+						</h2> */}
+						<AnimatedText
+							text="( From current trends to alternative styles )"
+							className="text-md font-ligthtext-black"
+							delay={0.4}
+							duration={0.2}
+							staggerDelay={0.03}
+						/>
+						{/* <p className='text-md font-ligthtext-black mt-2'>( From current trends to alternative styles )</p> */}
 					</div>
 					<div className='flex flex-col items-end gap-3'>
-						<Button title='See mooore' variant={3} />
+						<Button title='See mooore' variant={6} />
 					</div>
 				</div>
 

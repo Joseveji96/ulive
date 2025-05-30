@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import Ulogo from '@/components/ulogo';
 import React, { useRef } from 'react';
 import { TextAnimate } from '@/components/magicui/text-animate';
+import { AnimatedText } from '@/components/AnimatedTextDemo';
 
 export default function About() {
   const ref = useRef(null);
@@ -29,18 +30,24 @@ export default function About() {
               </div>
             </div>
             <div className='overflow-hidden '>
-              <motion.h2
-                initial={{ y: "100%" }}
-                animate={inView ? { y: "0%" } : {}}
+              <motion.div
+                initial={{ y: "100%", x: "-10%" }}
+                animate={inView ? { y: "0%", x: "0%" } : {}}
                 transition={{
                   duration: 0.8,
                   delay: 0.6, // retraso por línea
                   ease: "easeOut",
                 }}
-                className="uppercase font-medium text-8xl text-black"
               >
-                Not just about clothes —
-              </motion.h2>
+                <AnimatedText
+                text="Not just about clothes —"
+                className="uppercase text-7xl font-bold text-black"
+                delay={0.2}
+                duration={0.5}
+                staggerDelay={0.08}
+              />
+                
+              </motion.div>
             </div>
           </div>
 
@@ -106,11 +113,10 @@ export default function About() {
               <clipPath id="clip-shape">
                 <motion.path
                   ref={ref}
-                  d="M184.336 28C278.75 -32.0304 937 28 937 28V835C937 835 448.785 833.448 312.04 833.448C175.295 833.448 -69 818.5 20.382 634.559C109.764 450.617 20.382 441 20.382 339C47 233.5 134.664 309.5 178.5 242.5C219.015 180.576 77.3169 96.0445 184.336 28Z"
                   animate={inView ? {
                     d: [
-                      "M150 29.5001C244.414 -30.5303 940 22 940 22V829C940 829 451.785 827.448 315.04 827.448C178.295 827.448 -62.882 861.441 26.5 677.5C115.882 493.559 1 513 1 411C27.618 305.5 137.664 303.5 181.5 236.5C222.015 174.576 42.9813 97.5445 150 29.5001Z",
-                      "M184.336 28C278.75 -32.0304 937 28 937 28V835C937 835 448.785 833.448 312.04 833.448C175.295 833.448 -69 818.5 20.382 634.559C109.764 450.617 20.382 441 20.382 339C47 233.5 134.664 309.5 178.5 242.5C219.015 180.576 77.3169 96.0445 184.336 28Z"
+                      "M265.21 2.55188C378.21 2.55282 993.114 1 993.114 1V808H443.868C307.123 808 90.5 864.5 34 616C-22.5 367.5 193.868 335.5 193.868 335.5C193.868 335.5 0.5 303 0.5 164.5C0.5 26 152.21 2.55094 265.21 2.55188Z",
+                      "M216.842 2.55188C329.842 2.55282 944.746 1 944.746 1V808H395.5C258.755 808 73.5 821.5 12.5 627C-48.5 432.5 145.5 335.5 145.5 335.5C145.5 335.5 25.5 297.5 25.5 159C25.5 20.5 103.842 2.55094 216.842 2.55188Z",
                     ]
                   } : {}}
                   transition={{
@@ -123,7 +129,7 @@ export default function About() {
             </defs>
 
             <motion.image
-              href="/a.jpg"
+              href="/HeroImg.png"
               width="100%"
               height="100%"
               preserveAspectRatio="xMidYMid slice"
