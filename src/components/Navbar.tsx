@@ -48,17 +48,15 @@ export default function Navbar() {
                     transition={{ duration: 0.2 }}
                     className="flex items-center space-x-8"
                   >
+                    
                     <li>
-                      <a href="#" className="text-blanco-50 hover:text-gray-900 navbar-link-white">Home</a>
+                      <a href="#about" className="text-blanco-50 hover:text-gray-900 navbar-link-white">About</a>
                     </li>
                     <li>
-                      <a href="#" className="text-blanco-50 hover:text-gray-900 navbar-link-white">About</a>
+                      <a href="#features" className="text-blanco-50 hover:text-gray-900 navbar-link-white">Features</a>
                     </li>
                     <li>
-                      <a href="#" className="text-blanco-50 hover:text-gray-900 navbar-link-white">Services</a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-blanco-50 hover:text-gray-900 navbar-link-white">Contact</a>
+                      <a href="#trends" className="text-blanco-50 hover:text-gray-900 navbar-link-white">Trends</a>
                     </li>
                   </motion.div>
                 ) : (

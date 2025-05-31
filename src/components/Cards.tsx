@@ -5,24 +5,25 @@ import { motion, useInView } from 'framer-motion';
 
 function Cards() {
   const ref1 = React.useRef(null);
-  const ref2 = React.useRef(null);
-  const ref3 = React.useRef(null);
-  
-  const isInView1 = useInView(ref1, { once: true });
-  const isInView2 = useInView(ref2, { once: true });
-  const isInView3 = useInView(ref3, { once: true });
+
+  const isInView = useInView(ref1, { once: false, amount: 0.3 });
 
   return (
     <div className='flex justify-between mt-4'>
-      <motion.div 
+      <motion.div
         ref={ref1}
         initial={{ opacity: 0, y: 50 }}
         animate={{
-          opacity: isInView1 ? 1 : 0,
-          y: isInView1 ? 0 : 50
+          opacity: isInView ? 1 : 0,
+          y: isInView ? 0 : 50
         }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative w-[450px] h-[570px] rounded-lg overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
+        transition={{ duration: 0.8, delay: 0.4 }}
+        variants={{
+          initial: { filter: "brightness(1)" },
+          hover: { filter: "brightness(1.2)" },
+        }}
+        whileHover="hover"
+        className="relative w-[460px] h-[545px] rounded-lg overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
       >
         {/* Imagen de fondo */}
         <div className="absolute inset-0">
@@ -37,7 +38,7 @@ function Cards() {
         </div>
 
         {/* Botón superior izquierdo */}
-        <Button title='See +' variant={5}/>
+        <Button title='See +' variant={5} />
 
         {/* Capa de gradiente y texto */}
         <div className="absolute bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-black/70 via-transparent z-10">
@@ -45,16 +46,20 @@ function Cards() {
           <h3 className="text-white text-7xl font-bold uppercase text-right">season</h3>
         </div>
       </motion.div>
-      
-      <motion.div 
-        ref={ref2}
+
+      <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{
-          opacity: isInView2 ? 1 : 0,
-          y: isInView2 ? 0 : 50
+          opacity: isInView ? 1 : 0,
+          y: isInView ? 0 : 50
         }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="relative w-[450px] h-[570px] rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
+        variants={{
+          initial: { filter: "brightness(1)" },
+          hover: { filter: "brightness(1.2)" },
+        }}
+        whileHover="hover"
+        className="relative w-[460px] h-[545px] rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
       >
         {/* Imagen de fondo */}
         <div className="absolute inset-0">
@@ -69,7 +74,7 @@ function Cards() {
         </div>
 
         {/* Botón superior izquierdo */}
-        <Button title='See +' variant={5}/>
+        <Button title='See +' variant={5} />
 
         {/* Capa de gradiente y texto */}
         <div className="absolute bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-black/70 via-transparent z-10 text-center">
@@ -78,15 +83,19 @@ function Cards() {
         </div>
       </motion.div>
 
-      <motion.div 
-        ref={ref3}
+      <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{
-          opacity: isInView3 ? 1 : 0,
-          y: isInView3 ? 0 : 50
+          opacity: isInView ? 1 : 0,
+          y: isInView ? 0 : 50
         }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="relative w-[450px] h-[570px] rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
+        transition={{ duration: 0.8, delay: 0.4 }}
+        variants={{
+          initial: { filter: "brightness(1)" },
+          hover: { filter: "brightness(1.2)" },
+        }}
+        whileHover="hover"
+        className="relative w-[460px] h-[545px] rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 p-4"
       >
         {/* Imagen de fondo */}
         <div className="absolute inset-0">
@@ -101,7 +110,7 @@ function Cards() {
         </div>
 
         {/* Botón superior izquierdo */}
-        <Button title='See +' variant={5}/>
+        <Button title='See +' variant={5} />
 
         {/* Capa de gradiente y texto */}
         <div className="absolute bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-black/70 via-transparent z-10">

@@ -41,7 +41,7 @@ export default function SeccionSnapAnimada() {
 
   return (
     <div ref={wrapperRef}>
-      <div className="h-[100vh] sticky top-0 z-10">
+      <div className="h-[100vh] sticky -top-96 pb-48  z-10">
         <Trends />
       </div>
       <div className="h-[100vh]">
