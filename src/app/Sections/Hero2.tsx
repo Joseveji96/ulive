@@ -91,7 +91,6 @@ export default function Hero2() {
                 staggerDelay={0.08}
               />
             </div>
-
             {/* Segundo título */}
 
             <div className="flex items-center">
