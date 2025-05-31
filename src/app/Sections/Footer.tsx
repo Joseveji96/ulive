@@ -7,7 +7,7 @@ import Button from '@/components/Button'
 
 const Footer = () => {
   const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const isInView = useInView(ref, { once: true, amount: 0.5 })
 
   const containerVariants = {
     hidden: { opacity: 0 },
