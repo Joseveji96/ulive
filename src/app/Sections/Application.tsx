@@ -6,7 +6,7 @@ import React from "react"
 
 function Application() {
   const ref = React.useRef(null)
-  const isInView = useInView(ref, { once: false, amount: 0.3 })
+  const isInView = useInView(ref, { once: true, amount: 0.3 })
 
   return (
     <div className="bg-black relative z-30 text-white w-full h-[100vh] flex items-start justify-between" id="ourapp" ref={ref}>
@@ -37,7 +37,7 @@ function Application() {
         <motion.div
               className='flex flex-col mt-6 sm:flex-row gap-4'
             >
-              <Button variant={7} bgcolor="#FBFBFB" classNames="hover:text-black">
+              <Button variant={5}>
                 <span className="relative z-10 flex items-center gap-3">
                   Download for iOS
                   <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 384 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@ function Application() {
                 </span>
               </Button>
 
-              <Button variant={7} bgcolor="#FBFBFB" classNames="hover:text-black">
+              <Button variant={5}>
                 <span className="relative z-10 flex items-center gap-3">
                   Download for Android
                   <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">

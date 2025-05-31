@@ -2,6 +2,7 @@ import { AnimatedText } from '@/components/AnimatedTextDemo'
 import Button from '@/components/Button'
 import React from 'react'
 import Image from 'next/image';
+import { motion, useInView } from 'framer-motion';
 
 
 const lib = [
@@ -22,8 +23,10 @@ const lib = [
     }
 ]
 const Social = () => {
+    const ref = React.useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.3 });
     return (
-        <div className='h-[80vh] relative bg-blanco-50 p-4 md:p-8 lg:p-16 grid grid-cols-[4fr_6fr] gap-10' id='social'>
+        <div className='h-[80vh] relative bg-blanco-50 p-4 md:p-8 lg:p-16 grid grid-cols-[4fr_6fr] gap-10' id='social' ref={ref}>
             <div className='flex flex-col'>
                 <AnimatedText
                     text="Comunity core on social media"
@@ -50,35 +53,60 @@ const Social = () => {
                     </Button>
                 </div>
             </div>
-            <div className='flex'>
-                {
-                    lib.map((item, id) => (
-                        <div
-                            key={id}
+            <motion.div
 
-                            className="relative w-[300px] h-full overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300"
+                className="flex"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.5 }}
+            >
+                {lib.map((item, id) => (
+                    <motion.div
+                        key={id}
+                        initial={{ opacity: 0, x: 200 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{
+                            duration: 0.6,
+                            delay: id * 0.15,
+                            ease: [0.4, 0.0, 0.2, 1],
+                        }}
+                        variants={{
+                            initial: { filter: "brightness(1)" },
+                            hover: { filter: "brightness(1.2)" },
+                        }}
+                        whileHover="hover"
+                        className="relative w-[280px] h-full overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                    >
+                        {/* Imagen */}
+                        <Image
+                            src={item.src}
+                            alt={item.hash || "Imagen"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 280px"
+                            className="object-cover"
+                            priority={false}
+                        />
+
+                        {/* Gradiente + texto */}
+                        <motion.div 
+                            className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/70 via-transparent text-white z-10"
+                            variants={{
+                                initial: {},
+                                hover: {}
+                            }}
                         >
-                            {/* Imagen de fondo */}
-                            <div className="absolute inset-0">
-                                <Image
-                                    src={item.src}
-                                    alt="Adventure landscape"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 300px"
-                                    className="object-cover"
-                                    priority={false}
-                                />
-                            </div>
-
-                            {/* Capa de gradiente y texto */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 pb-12 bg-gradient-to-t from-black/70 via-transparent z-10 text-left">
-                                <h3 className="text-white text-ls italic uppercase">{item.hash}</h3>
-                            </div>
-                        </div>
-                    ))
-                }
-
-            </div>
+                            <motion.h3
+                                variants={{
+                                    initial: { scale: 1, opacity: 0.8, y: 0 },
+                                    hover: { scale: 1.05, opacity: 1, y: -4 }
+                                }}
+                                className="text-sm uppercase italic tracking-wide">
+                                {item.hash}
+                            </motion.h3>
+                        </motion.div>
+                    </motion.div>
+                ))}
+            </motion.div>
         </div>
     )
 }
