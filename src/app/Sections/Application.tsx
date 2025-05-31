@@ -5,7 +5,7 @@ function Application() {
  
   return (
 
-        <div className="bg-black text-white w-full h-screen flex items-start justify-between overflow-hidden" id="ourapp">
+        <div className="bg-black relative z-30 text-white w-full h-[100vh] flex items-start justify-between" id="ourapp">
           {/* Texto */}
           <div className="max-w-xl h-full flex flex-col z-10 justify-center ml-16">
             <h1 className="text-5xl md:text-6xl font-semibold leading-tight uppercase">
@@ -29,12 +29,16 @@ function Application() {
 
           </div>
 
-          {/* Contenedor para el SVG redimensionable con animación */}
-          <motion.div 
+          {/* Contenedor para el SVG redimensionable con animación */}          <motion.div 
             className="z-10 w-[608px] h-[716px] flex items-start"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
+            initial={{ scale: 0.8, y: 50, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            transition={{ 
+              delay: 0.3,
+              duration: 1.2,
+              ease: [0.6, 0.01, -0.05, 0.95],
+              opacity: { duration: 0.6 }
+            }}
           >
             <svg viewBox="0 0 608 716" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
               <defs>

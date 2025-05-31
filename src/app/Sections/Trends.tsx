@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function Trends() {
   return (
-    <section className='relative top-0 bg-blanco-50 w-full min-h-screen m-0 p-16' id='trends'>
+    <section className='relative z-0 bg-blanco-50 w-full h-[100vh] m-0 p-16 overflow-hidden' id='trends'>
       <div className='flex flex-row justify-between items-end'>
         <div className='flex flex-col h-full'>
           <AnimatedText

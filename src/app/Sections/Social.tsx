@@ -23,7 +23,7 @@ const lib = [
 ]
 const Social = () => {
     return (
-        <section className='h-[80vh] p-4 md:p-8 lg:p-16 grid grid-cols-[4fr_6fr] gap-10'>
+        <div className='h-[80vh] relative bg-blanco-50 p-4 md:p-8 lg:p-16 grid grid-cols-[4fr_6fr] gap-10' id='social'>
             <div className='flex flex-col'>
                 <AnimatedText
                     text="Comunity core on social media"
@@ -79,7 +79,7 @@ const Social = () => {
                 }
 
             </div>
-        </section>
+        </div>
     )
 }
 
