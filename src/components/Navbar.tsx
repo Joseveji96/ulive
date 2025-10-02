@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${hasMixBlend ? 'mix-blend-exclusion' : ''}`}>
+      <nav className={`fixed top-0 left-0 w-screen z-50 transition-all duration-300 ${hasMixBlend ? 'mix-blend-exclusion' : ''}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -80,7 +80,11 @@ export default function Navbar() {
               
             </ul>
             <div className="sm:hidden">
-              <button className="text-gray-600 hover:text-gray-900">
+              <button
+                className="text-gray-600 hover:text-gray-900"
+                onClick={toggleScrollMenu}
+                aria-label="Abrir menú"
+              >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -93,18 +97,18 @@ export default function Navbar() {
       {/* Menu overlay fuera del nav para evitar mix-blend */}
       <div className="isolation-auto">
         <AnimatePresence>
-          {(isScrollMenuOpen && hasMixBlend) && (
+          {(isScrollMenuOpen && (hasMixBlend || true)) && ( // <-- muestra el overlay en móvil también
             <>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="hidden lg:block fixed inset-0 backdrop-blur-[2px] z-40"
+                className="fixed inset-0 backdrop-blur-[2px] z-40"
                 onClick={toggleScrollMenu}
               />
               <motion.div
-                className="hidden lg:block p-2 fixed w-80 top-2 right-6 bg-slate-100 shadow-md z-40 rounded-xl overflow-hidden"
+                className="p-2 fixed w-80 top-2 right-6 bg-slate-100 shadow-md z-40 rounded-xl overflow-hidden"
                 initial={{ opacity: 0, height: 0, x: 300 }}
                 animate={{ opacity: 1, height: 'auto', x: 0 }}
                 exit={{ opacity: 0, height: 0, x: 100 }}
